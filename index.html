@@ -1,87 +1,79 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Flotr2-shade by mtmckenna</title>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <title>Flotr2-shade by mtmckenna</title>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <style type="text/css">
-      #graph {
-        width : 600px;
-        height: 384px;
-        margin: 8px auto;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Flotr2-shade</h1>
-        <p>This Flotr2 plugin shades regions of a graph based on an array of user supplied ranges.</p>
-        <p class="view"><a href="https://github.com/mtmckenna/flotr2-shade">View the Project on GitHub <small>mtmckenna/flotr2-shade</small></a></p>
-        <ul>
-          <li><a href="https://github.com/mtmckenna/flotr2-shade/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/mtmckenna/flotr2-shade/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/mtmckenna/flotr2-shade">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>flotr2-shade</h1>
-
-<p>This Flotr2 plugin shades regions of a graph based on an array of user supplied ranges.</p>
-
-<p>Example:</p>
-<div id="graph"></div>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/mtmckenna">mtmckenna</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script type="text/javascript">
-      (function () {
-
-        var
-          container = document.getElementById('graph'),
-          start = (new Date).getTime(),
-          data, graph, offset, i;
-
-        // Draw a sine curve at time t
-        function animate (t) {
-
-          data = [];
-          offset = 2 * Math.PI * (t - start) / 10000;
-
-          // Sample the sine function
-          for (i = 0; i < 4 * Math.PI; i += 0.2) {
-            data.push([i, Math.sin(i - offset)]);
-          }
-
-          // Draw Graph
-          graph = Flotr.draw(container, [ data ], {
-            yaxis : {
-              max : 2,
-              min : -2
+        <link rel="stylesheet" href="stylesheets/styles.css">
+        <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <style type="text/css">
+            #graph {
+                width : 100%;
+                height: 384px;
+                margin: 8px auto;
             }
-          });
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+            <h1>Flotr2-shade</h1>
+            <p>This Flotr2 plugin shades regions of a graph based on an array of user supplied ranges.</p>
+            <p class="view"><a href="https://github.com/mtmckenna/flotr2-shade">View the Project on GitHub <small>mtmckenna/flotr2-shade</small></a></p>
+            <ul>
+                <li><a href="https://github.com/mtmckenna/flotr2-shade/zipball/master">Download <strong>ZIP File</strong></a></li>
+                <li><a href="https://github.com/mtmckenna/flotr2-shade/tarball/master">Download <strong>TAR Ball</strong></a></li>
+                <li><a href="https://github.com/mtmckenna/flotr2-shade">View On <strong>GitHub</strong></a></li>
+            </ul>
+            </header>
+            <section>
+            <h1>flotr2-shade</h1>
 
-          // Animate
-          setTimeout(function () {
-            animate((new Date).getTime());
-          }, 50);
-        }
+            <p>Example*:</p>
+            <div id="graph"></div>
+            <p>Modified from <a href='http://www.humblesoftware.com/flotr2/index#!basic'>this</a> example.
+            </section>
+            <footer>
+            <p>This project is maintained by <a href="https://github.com/mtmckenna">mtmckenna</a></p>
+            <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+            </footer>
+        </div>
+        <script src="javascripts/flotr2.min.js"></script>
+        <script src="javascripts/flotr2.shade.js"></script>
+        <script type="text/javascript">
+            (function basic(container) {
+                var
+                d1 = [[0, 3], [4, 8], [8, 5], [9, 13]], // First data series
+                d2 = [],                                // Second data series
+                i, graph;
 
-        animate(start);
-      })();
-    </script>
-    <script src="javascripts/scale.fix.js"></script>
-    <script src="javascripts/flotr2.min.js"></script>
-    <script src="javascripts/flotr2.shade.js"></script>
-  </body>
+                // Generate first data set
+                for (i = 0; i < 14; i += 0.5) {
+                    d2.push([i, Math.sin(i)]);
+                }
+
+                // Draw Graph
+                graph = Flotr.draw(container, [ d1, d2 ], {
+                    xaxis: {
+                        minorTickFreq: 4,
+                        majorTickFreq: 10,
+                        shade: {
+                            ranges: [[2.5, 5.0], [7.5, 10]],
+                            fillColor: '#344152',
+                            fillOpacity: .5
+                        }
+                    },
+                    grid: {
+                        minorVerticalLines: true
+                    }
+                });
+            })(document.getElementById('graph'));
+        </script>
+        <script src="javascripts/scale.fix.js"></script>
+    </body>
 </html>
